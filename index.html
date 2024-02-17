@@ -555,7 +555,44 @@ function showhideEmail(){
         }
   </script>
 
+ <script>
+      // Function to set a cookie with a given name, value, and expiration date
+      function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
 
+        // Function to get the value of a cookie by its name
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        // Function to display the welcome message based on cookie
+        function displayWelcomeMessage() {
+            var lastVisit = getCookie("lastVisit");
+            if (lastVisit) {
+                alert("Welcome back! Your last visit was " + lastVisit);
+            } else {
+                var currentDate = new Date().toUTCString();
+                setCookie("lastVisit", currentDate, 365); // Set cookie for 1 year
+                alert("Welcome to my homepage!");
+            }
+        }
+        displayWelcomeMessage();
+
+      </script>
 </body>
 
 </html>
